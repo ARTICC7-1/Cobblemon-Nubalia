@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cobblemon Nubalia | Victini Victory Regional Adventure</title>
+    <meta name="description" content="Discover Cobblemon Nubalia, a Pokémon-inspired Minecraft adventure featuring diverse exploration, trainer battles, and 18 type-specialized Gyms. Play the stable beta and follow the region's development.">
+    
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:title" content="Cobblemon Nubalia | Victory Awaits in Nubalia">
+    <meta property="og:description" content="Explore a growing region, discover Pokémon, challenge trainers, and take on the 18-Gym journey in Cobblemon Nubalia.">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        victini: {
+                            obsidian: '#121019',
+                            card: '#1A1822',
+                            cardhover: '#242030',
+                            border: '#322A3F',
+                            orange: '#FF4500',
+                            red: '#E62A0D',
+                            flame: '#FFAA00',
+                            gold: '#FFC107',
+                            cream: '#FFF8EE',
+                            muted: '#BDB3C7',
+                            eyeblue: '#00A2FF',
+                            cyanglow: '#38D3FF',
+                            crimson: '#E0314B'
+                        },
+                        type: {
+                            bug: '#A8B820',
+                            normal: '#A8A878',
+                            rock: '#B8A038',
+                            water: '#6890F0',
+                            poison: '#A040A0',
+                            ground: '#E0C068',
+                            fairy: '#EE99AC',
+                            flying: '#A890F0',
+                            fighting: '#C03028',
+                            ice: '#98D8D8',
+                            electric: '#F8D030',
+                            ghost: '#705898',
+                            fire: '#FF4500',
+                            steel: '#B8B8D0',
+                            dark: '#705848',
+                            psychic: '#F85888',
+                            dragon: '#7038F8',
+                            grass: '#78C850'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #121019;
+            --bg-card: #1A1822;
+            --bg-card-hover: #242030;
+            --border-color: #322A3F;
+            --primary-victini-orange: #FF4500;
+            --primary-victini-red: #E62A0D;
+            --secondary-flame-yellow: #FFAA00;
+            --accent-eye-blue: #00A2FF;
+            --text-main: #FFF8EE;
+            --text-muted: #BDB3C7;
+            --accent-gradient: linear-gradient(135deg, #FF4500, #FF8C00, #FFC107);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Custom Victini Flame Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121019;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #FF4500, #FFAA00);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF5500;
+        }
+
+        /* Victini Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(26, 24, 34, 0.82);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+        }
+
+        .glass-card {
+            background: rgba(26, 24, 34, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 69, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 170, 0, 0.4);
+            background: rgba(36, 32, 48, 0.85);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(255, 69, 0, 0.25), 0 0 15px rgba(0, 162, 255, 0.15);
+        }
+
+        /* Pixel-Art Inspired Fiery Border Motif */
+        .victini-pixel-glow {
+            position: relative;
+        }
+        .victini-pixel-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #E62A0D, #FF4500, #FFAA00, #00A2FF);
+        }
+
+        /* Pulsing Dot Animation */
+        @keyframes pulse-fast {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+        .animate-pulse-fast {
+            animation: pulse-fast 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Flame Button Glow */
+        .flame-btn {
+            background: linear-gradient(135deg, #E62A0D 0%, #FF4500 50%, #FFAA00 100%);
+            box-shadow: 0 4px 20px rgba(255, 69, 0, 0.35);
+        }
+        .flame-btn:hover {
+            box-shadow: 0 6px 25px rgba(255, 170, 0, 0.5), 0 0 10px rgba(0, 162, 255, 0.3);
+        }
+
+        /* Eye Blue Accent Glow */
+        .eye-blue-glow {
+            box-shadow: 0 0 12px rgba(0, 162, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-victini-orange selection:text-victini-cream">
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 w-full glass-panel border-b border-victini-border victini-pixel-glow transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo & Brand Title -->
+            <a href="#home" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-victini-red via-victini-orange to-victini-flame flex items-center justify-center shadow-lg shadow-victini-orange/30 group-hover:scale-105 transition-transform border border-victini-gold/40">
+                    <image src="assets/images/victini-icon.png" alt="Victini Icon" class="">
+                </div>
+                <div>
+                    <span class="font-extrabold text-xl tracking-wider text-white block leading-none">COBBLEMON</span>
+                    <span class="text-xs font-bold tracking-widest text-victini-cyanglow uppercase flex items-center gap-1">
+                        <i class="fa-solid fa-eye text-[10px]"></i> NUBALIA REGION
+                    </span>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+                <a href="#home" class="text-victini-muted hover:text-victini-flame transition-colors">Home</a>
+                <a href="#about" class="text-victini-muted hover:text-victini-flame transition-colors">The Region</a>
+                <a href="#gyms" class="text-victini-muted hover:text-victini-flame transition-colors">18 Gyms</a>
+                <a href="#trainers" class="text-victini-muted hover:text-victini-flame transition-colors">Trainers</a>
+                <a href="#mods" class="text-victini-muted hover:text-victini-flame transition-colors">Gameplay & Mods</a>
+                <a href="#updates" class="text-victini-muted hover:text-victini-flame transition-colors">Updates</a>
+            </nav>
+
+            <!-- Status Indicator & CTA Button -->
+            <div class="hidden sm:flex items-center gap-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-victini-card border border-victini-orange/30 text-xs font-mono font-medium text-victini-flame">
+                    <span class="w-2 h-2 rounded-full bg-victini-orange animate-pulse-fast"></span>
+                    <span>STABLE BETA</span>
+                </div>
+                <button onclick="openDownloadModal()" class="flame-btn px-4 py-2 rounded-lg text-white font-bold text-sm transition-all flex items-center gap-2 border border-victini-gold/30 active:scale-95">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download Beta</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-victini-muted hover:text-white hover:bg-white/5 focus:outline-none" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars text-xl" id="menuIcon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden glass-panel border-b border-victini-border px-4 pt-2 pb-6 space-y-3">
+            <a href="#home" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-victini-cream hover:bg-white/5">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-victini-cream hover:bg-white/5">The Region</a>
+            <a href="#gyms" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-victini-cream hover:bg-white/5">18 Gyms</a>
+            <a href="#trainers" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-victini-cream hover:bg-white/5">Trainers</a>
+            <a href="#mods" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-victini-cream hover:bg-white/5">Gameplay & Mods</a>
+            <a href="#updates" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-victini-cream hover:bg-white/5">Updates</a>
+            <div class="pt-2 flex flex-col gap-3">
+                <div class="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-victini-card border border-victini-orange/40 text-xs font-medium text-victini-flame">
+                    <span class="w-2 h-2 rounded-full bg-victini-orange animate-pulse-fast"></span>
+                    <span>STABLE BETA · IN DEVELOPMENT</span>
+                </div>
+                <button onclick="openDownloadModal(); toggleMobileMenu();" class="w-full py-2.5 rounded-lg flame-btn text-white font-bold text-center flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download the Beta</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- SECTION A: HERO BANNER -->
+        <section id="home" class="relative py-20 lg:py-32 overflow-hidden border-b border-victini-border bg-gradient-to-b from-victini-obsidian via-victini-card to-victini-obsidian">
+            <!-- Background Decorative Grid & Victini Glowing Aura Effects -->
+            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#FF4500_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-victini-orange/15 blur-[120px] rounded-full pointer-events-none"></div>
+            <div class="absolute top-1/3 right-10 w-72 h-72 bg-victini-eyeblue/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                
+                <!-- Status Tag with Eye Blue Accent Dot -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-victini-card border border-victini-orange/40 text-victini-flame font-mono text-xs uppercase tracking-wider mb-8 shadow-inner">
+                    <span class="w-2 h-2 rounded-full bg-victini-eyeblue animate-pulse-fast eye-blue-glow"></span>
+                    <span>Stable Beta · Victini Victory Progression</span>
+                </div>
+
+                <!-- Main Title -->
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight mb-4 uppercase drop-shadow-lg">
+                    Cobblemon <span class="text-transparent bg-clip-text bg-gradient-to-r from-victini-red via-victini-orange via-victini-flame to-victini-cyanglow">Nubalia</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-xl sm:text-2xl font-bold text-victini-cyanglow max-w-2xl mx-auto mb-6 drop-shadow">
+                    Your Pokémon adventure begins here.
+                </p>
+
+                <!-- Description -->
+                <p class="text-base sm:text-lg text-victini-cream/90 max-w-3xl mx-auto leading-relaxed mb-10">
+                    Explore a growing Pokémon region, discover Pokémon from across generations, challenge 18 type-specialized Gyms, and build your team in an adventure where every battle brings you closer to becoming Champion.
+                </p>
+
+                <!-- Call to Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                    <button onclick="openDownloadModal()" class="w-full sm:w-auto px-8 py-4 rounded-xl flame-btn text-white font-black text-lg transition-all border border-victini-gold/40 flex items-center justify-center gap-3 active:scale-95">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download the Beta</span>
+                    </button>
+                    <a href="#gyms" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card text-victini-cream font-semibold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-2 border border-victini-border">
+                        <i class="fa-solid fa-map-location-dot text-victini-flame"></i>
+                        <span>Explore the Region</span>
+                    </a>
+                </div>
+
+                <!-- Stat Cards Bar -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+                    <div class="glass-card p-4 rounded-xl border border-victini-border">
+                        <span class="text-xs font-mono text-victini-muted uppercase block mb-1">Minecraft</span>
+                        <span class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-cube text-victini-orange"></i> 1.21.1
+                        </span>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl border border-victini-border">
+                        <span class="text-xs font-mono text-victini-muted uppercase block mb-1">Mod Loader</span>
+                        <span class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-scroll text-victini-cyanglow"></i> Fabric
+                        </span>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl border border-victini-border">
+                        <span class="text-xs font-mono text-victini-muted uppercase block mb-1">Core Mod</span>
+                        <span class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-dragon text-victini-flame"></i> Cobblemon 1.8.2
+                        </span>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl border border-victini-border">
+                        <span class="text-xs font-mono text-victini-muted uppercase block mb-1">Gym Progression</span>
+                        <span class="text-lg font-bold text-victini-flame flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-victini-crimson"></i> 18 Planned Types
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION B: WELCOME TO NUBALIA -->
+        <section id="about" class="py-20 relative bg-victini-obsidian">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Column: Narrative -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 text-victini-orange font-bold text-sm tracking-wider uppercase">
+                            <i class="fa-solid fa-earth-americas"></i>
+                            <span>Regional Overview</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                            A New Region Awaits
+                        </h2>
+                        <p class="text-victini-cream text-lg leading-relaxed">
+                            Welcome to <strong class="text-victini-flame">Nubalia</strong>, a Pokémon adventure shaped by exploration, discovery, and the challenge of becoming a Champion.
+                        </p>
+                        <p class="text-victini-muted leading-relaxed">
+                            Travel through diverse environments, encounter Pokémon from multiple generations, and face trainers who stand between you and your next milestone. Nubalia is being developed as a complete regional journey, with a progression system built around routes, increasingly challenging battles, and 18 specialized Gyms.
+                        </p>
+
+                        <!-- Beta Transparency Callout Box -->
+                        <div class="p-5 rounded-xl bg-victini-card border border-victini-orange/30 text-victini-cream text-sm leading-relaxed flex items-start gap-4">
+                            <i class="fa-solid fa-triangle-exclamation text-victini-gold text-xl shrink-0 mt-0.5"></i>
+                            <div>
+                                <strong class="block text-victini-flame font-semibold mb-1">Evolving Beta Journey</strong>
+                                Nubalia is an actively evolving project. This stable beta provides the initial foundation for the region. Progression, encounter tables, trainer balance, and Gym implementations will continuously expand in future updates.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Regional Feature Cards -->
+                    <div class="lg:col-span-5 grid grid-cols-1 gap-4">
+                        <div class="glass-card p-6 rounded-xl border border-victini-border flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-victini-red/20 border border-victini-orange/40 flex items-center justify-center shrink-0 text-victini-orange text-xl">
+                                <i class="fa-solid fa-route"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-1">18 Route Progression</h3>
+                                <p class="text-victini-muted text-sm">A structured linear path with distinct ecological zones, level brackets, and type associations.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-xl border border-victini-border flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-victini-eyeblue/20 border border-victini-eyeblue/40 flex items-center justify-center shrink-0 text-victini-cyanglow text-xl">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-1">Trainer Encounters</h3>
+                                <p class="text-victini-muted text-sm">Powered by Cobblemon Trainers, featuring custom rosters and strategic difficulty curves.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-xl border border-victini-border flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-victini-flame/20 border border-victini-gold/40 flex items-center justify-center shrink-0 text-victini-gold text-xl">
+                                <i class="fa-solid fa-mountain-sun"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-1">Expanded Minecraft World</h3>
+                                <p class="text-victini-muted text-sm">Seamlessly integrates Biomes O' Plenty, custom dungeons, and structures for deep exploration.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION C: THE GYM CHALLENGE & 18 ROUTES -->
+        <section id="gyms" class="py-20 bg-gradient-to-b from-victini-obsidian via-victini-card to-victini-obsidian border-y border-victini-border relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Section Header -->
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <div class="inline-flex items-center gap-2 text-victini-flame font-bold text-sm tracking-wider uppercase mb-2">
+                        <i class="fa-solid fa-trophy"></i>
+                        <span>Regional League</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-4">
+                        18 Gyms. 18 Types. One Journey.
+                    </h2>
+                    <p class="text-victini-cream text-base sm:text-lg">
+                        Every Gym represents a different Pokémon type, encouraging players to adapt their teams and strategies throughout their journey across Nubalia.
+                    </p>
+                </div>
+
+                <!-- Search and Type Filter Controls -->
+                <div class="glass-panel p-6 rounded-2xl mb-10 border border-victini-border">
+                    <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                        
+                        <!-- Search Bar -->
+                        <div class="relative w-full md:w-80">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-victini-muted"></i>
+                            <input type="text" id="routeSearch" oninput="filterRoutes()" placeholder="Search route or type..." 
+                                class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-victini-obsidian border border-victini-border text-white placeholder-victini-muted focus:outline-none focus:border-victini-orange text-sm">
+                        </div>
+
+                        <!-- Category Filter Buttons -->
+                        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-start md:justify-end" id="typeFilterContainer">
+                            <button onclick="setFilter('all')" class="type-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold flame-btn text-white border border-victini-gold/30 transition-all" data-filter="all">All (18)</button>
+                            <button onclick="setFilter('elemental')" class="type-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/5 text-victini-muted border border-white/10 hover:bg-white/10 transition-all" data-filter="elemental">Elemental</button>
+                            <button onclick="setFilter('physical')" class="type-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/5 text-victini-muted border border-white/10 hover:bg-white/10 transition-all" data-filter="physical">Physical / Martial</button>
+                            <button onclick="setFilter('mystic')" class="type-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/5 text-victini-muted border border-white/10 hover:bg-white/10 transition-all" data-filter="mystic">Mystic / Tactical</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic 18 Routes Grid -->
+                <div id="routesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Route cards rendered via JS below -->
+                </div>
+
+                <!-- Empty State Search Result -->
+                <div id="noResults" class="hidden text-center py-12 glass-panel rounded-2xl border border-victini-border mt-6">
+                    <i class="fa-solid fa-ghost text-4xl text-victini-muted mb-3"></i>
+                    <p class="text-victini-cream font-medium">No matching routes or Gym types found.</p>
+                    <button onclick="resetFilters()" class="mt-3 text-xs text-victini-cyanglow underline hover:text-white">Reset search filter</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION D: TRAINER BATTLES & PROGRESSION -->
+        <section id="trainers" class="py-20 bg-victini-obsidian">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 text-victini-cyanglow font-bold text-sm tracking-wider uppercase mb-2">
+                        <i class="fa-solid fa-swords"></i>
+                        <span>Battle Systems</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+                        Every Battle Moves You Forward
+                    </h2>
+                    <p class="text-victini-cream">
+                        Trainer encounters are a central element of Nubalia's regional progression. The region utilizes named trainers with individual teams, specialized roles, and escalating level bounds.
+                    </p>
+                </div>
+
+                <!-- Level Brackets -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                    
+                    <!-- Zone 1 Bracket -->
+                    <div class="glass-card p-6 rounded-2xl border border-victini-orange/30 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 px-4 py-1 bg-victini-orange/30 text-victini-flame text-xs font-mono font-bold rounded-bl-xl border-l border-b border-victini-orange/30">
+                            ZONE 1 PROGRESSION
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-leaf text-victini-gold"></i> Oakwood Trail Encounters
+                        </h3>
+                        <p class="text-victini-muted text-sm mb-4">
+                            Initial woodland journey designed for early team development and type learning.
+                        </p>
+                        <div class="flex items-center justify-between p-3 bg-victini-obsidian/80 rounded-xl border border-victini-border font-mono text-sm">
+                            <span class="text-victini-muted">Target Level Bracket:</span>
+                            <span class="text-victini-flame font-bold">Lv. 15 – 18</span>
+                        </div>
+                    </div>
+
+                    <!-- Zone 2 Bracket -->
+                    <div class="glass-card p-6 rounded-2xl border border-victini-eyeblue/30 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 px-4 py-1 bg-victini-eyeblue/30 text-victini-cyanglow text-xs font-mono font-bold rounded-bl-xl border-l border-b border-victini-eyeblue/30">
+                            ZONE 2 PROGRESSION
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-sun text-victini-cyanglow"></i> Dawnfield Plains Transition
+                        </h3>
+                        <p class="text-victini-muted text-sm mb-4">
+                            Opens into broader open terrain with varied trainer classes and secondary typing challenges.
+                        </p>
+                        <div class="flex items-center justify-between p-3 bg-victini-obsidian/80 rounded-xl border border-victini-border font-mono text-sm">
+                            <span class="text-victini-muted">Target Level Bracket:</span>
+                            <span class="text-victini-flame font-bold">Lv. 19 – 23</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Trainer Showcase Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <div class="glass-card p-6 rounded-2xl border border-victini-border text-center relative group">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-victini-red to-victini-orange p-1 mb-4 shadow-lg">
+                            <div class="w-full h-full rounded-full bg-victini-card flex items-center justify-center text-3xl text-victini-flame">
+                                <i class="fa-solid fa-user-ninja"></i>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono text-victini-flame uppercase tracking-widest font-bold">Route 01 Specialist</span>
+                        <h4 class="text-lg font-bold text-white mt-1">Bug Catcher Thomas</h4>
+                        <p class="text-xs text-victini-muted mt-1">Oakwood Trail · Zone 1</p>
+                        <div class="mt-4 pt-4 border-t border-victini-border flex justify-center gap-2 text-xs text-victini-cream">
+                            <span class="px-2 py-1 rounded bg-white/5 border border-white/10">Caterpie</span>
+                            <span class="px-2 py-1 rounded bg-white/5 border border-white/10">Butterfree</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border border-victini-border text-center relative group">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-victini-flame to-victini-gold p-1 mb-4 shadow-lg">
+                            <div class="w-full h-full rounded-full bg-victini-card flex items-center justify-center text-3xl text-victini-gold">
+                                <i class="fa-solid fa-person-hiking"></i>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono text-victini-gold uppercase tracking-widest font-bold">Route 02 Trainer</span>
+                        <h4 class="text-lg font-bold text-white mt-1">Hiker Jonathan</h4>
+                        <p class="text-xs text-victini-muted mt-1">Dawnfield Plains · Zone 2</p>
+                        <div class="mt-4 pt-4 border-t border-victini-border flex justify-center gap-2 text-xs text-victini-cream">
+                            <span class="px-2 py-1 rounded bg-white/5 border border-white/10">Geodude</span>
+                            <span class="px-2 py-1 rounded bg-white/5 border border-white/10">Zigzagoon</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border border-victini-border text-center relative group">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-victini-eyeblue to-victini-cyanglow p-1 mb-4 shadow-lg">
+                            <div class="w-full h-full rounded-full bg-victini-card flex items-center justify-center text-3xl text-victini-cyanglow">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono text-victini-cyanglow uppercase tracking-widest font-bold">Gym Challenge Prep</span>
+                        <h4 class="text-lg font-bold text-white mt-1">Ace Trainer Elena</h4>
+                        <p class="text-xs text-victini-muted mt-1">Regional Boundary</p>
+                        <div class="mt-4 pt-4 border-t border-victini-border flex justify-center gap-2 text-xs text-victini-cream">
+                            <span class="px-2 py-1 rounded bg-white/5 border border-white/10">Riolu</span>
+                            <span class="px-2 py-1 rounded bg-white/5 border border-white/10">Staravia</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION E: CORE FEATURES & INSTALLED MODS -->
+        <section id="mods" class="py-20 bg-victini-card border-t border-victini-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <div class="inline-flex items-center gap-2 text-victini-flame font-bold text-sm tracking-wider uppercase mb-2">
+                        <i class="fa-solid fa-cubes"></i>
+                        <span>Integrated Mod Ecosystem</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+                        Modpack Features & Add-ons
+                    </h2>
+                    <p class="text-victini-cream">
+                        Cobblemon Nubalia blends core Pokémon mechanics with carefully selected quality-of-life, battle extension, world expansion, and collection mods.
+                    </p>
+                </div>
+
+                <!-- Tab Controls -->
+                <div class="flex justify-center mb-10 overflow-x-auto pb-2">
+                    <div class="glass-panel p-1.5 rounded-xl border border-victini-border inline-flex gap-2 min-w-max">
+                        <button onclick="switchTab('cobblemon')" id="tab-cobblemon" class="tab-btn px-4 py-2 rounded-lg text-sm font-bold flame-btn text-white transition-all">
+                            <i class="fa-solid fa-dragon mr-2"></i>Cobblemon & Battle
+                        </button>
+                        <button onclick="switchTab('pokedex')" id="tab-pokedex" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold text-victini-muted hover:text-white transition-all">
+                            <i class="fa-solid fa-dna mr-2"></i>Pokémon Distribution
+                        </button>
+                        <button onclick="switchTab('world')" id="tab-world" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold text-victini-muted hover:text-white transition-all">
+                            <i class="fa-solid fa-globe mr-2"></i>Beyond The Route (Minecraft)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab Content 1: Cobblemon & Battle Extensions -->
+                <div id="content-cobblemon" class="tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-xl border border-victini-border">
+                        <div class="text-victini-orange text-2xl mb-3"><i class="fa-solid fa-shield-cat"></i></div>
+                        <h3 class="text-lg font-bold text-white mb-2">Cobblemon 1.8.2 & Trainers</h3>
+                        <p class="text-victini-muted text-sm">Core Pokémon catching, spawning, animated models, and custom trainer battle foundation.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl border border-victini-border">
+                        <div class="text-victini-cyanglow text-2xl mb-3"><i class="fa-solid fa-bolt"></i></div>
+                        <h3 class="text-lg font-bold text-white mb-2">Mega Showdown & Badges</h3>
+                        <p class="text-victini-muted text-sm">Enhanced battle interface, Mega Evolution extensions, and official Gym Badge progression tracking.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl border border-victini-border">
+                        <div class="text-victini-flame text-2xl mb-3"><i class="fa-solid fa-dungeon"></i></div>
+                        <h3 class="text-lg font-bold text-white mb-2">Raids, Dens & TMs</h3>
+                        <p class="text-victini-muted text-sm">Cooperative battle dens, raid encounters, and Simple TMs for flexible team move learning.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl border border-victini-border">
+                        <div class="text-victini-gold text-2xl mb-3"><i class="fa-solid fa-book-open"></i></div>
+                        <h3 class="text-lg font-bold text-white mb-2">Cobblepedia & Catch Rates</h3>
+                        <p class="text-victini-muted text-sm">In-game encyclopedia, detailed Pokémon stats, movepool details, and real-time catch odds UI.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl border border-victini-border">
+                        <div class="text-victini-crimson text-2xl mb-3"><i class="fa-solid fa-gamepad"></i></div>
+                        <h3 class="text-lg font-bold text-white mb-2">Cobblemon Minigames & Go Catch</h3>
+                        <p class="text-victini-muted text-sm">Alternative gameplay utilities, collection challenges, and active field encounter options.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl border border-victini-border">
+                        <div class="text-victini-eyeblue text-2xl mb-3"><i class="fa-solid fa-crown"></i></div>
+                        <h3 class="text-lg font-bold text-white mb-2">Myths & Legends Compatibility</h3>
+                        <p class="text-victini-muted text-sm">Complete Cobblemon collection support for rare encounters and legendaries.</p>
+                    </div>
+                </div>
+
+                <!-- Tab Content 2: Regional Pokémon Distribution -->
+                <div id="content-pokedex" class="tab-content hidden glass-panel p-8 rounded-2xl border border-victini-border space-y-6">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-victini-flame"></i> Intended Regional Distribution Strategy
+                    </h3>
+                    <p class="text-victini-cream leading-relaxed">
+                        To craft a distinctive regional ecosystem, Nubalia emphasizes specific generations in standard route encounter tables:
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-victini-obsidian/80 border border-victini-orange/40 text-center">
+                            <span class="text-xs font-mono text-victini-orange uppercase font-bold">Primary Focus</span>
+                            <h4 class="text-lg font-bold text-white mt-1">Gens IV, V & VI</h4>
+                            <p class="text-xs text-victini-muted mt-1">Sinnoh, Unova, and Kalos species form the core encounters of the region.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-victini-obsidian/80 border border-victini-eyeblue/40 text-center">
+                            <span class="text-xs font-mono text-victini-cyanglow uppercase font-bold">Secondary Focus</span>
+                            <h4 class="text-lg font-bold text-white mt-1">Gens III & VII</h4>
+                            <p class="text-xs text-victini-muted mt-1">Hoenn and Alola Pokémon enrich specialized habitats and mountain peaks.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-victini-obsidian/80 border border-victini-gold/40 text-center">
+                            <span class="text-xs font-mono text-victini-gold uppercase font-bold">Specialized / Rare</span>
+                            <h4 class="text-lg font-bold text-white mt-1">Gens I & II</h4>
+                            <p class="text-xs text-victini-muted mt-1">Kanto and Johto Pokémon appear less commonly in ordinary trainer rosters.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content 3: Beyond The Next Route -->
+                <div id="content-world" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="glass-card p-5 rounded-xl border border-victini-border">
+                        <i class="fa-solid fa-tree text-victini-gold text-2xl mb-2"></i>
+                        <h4 class="text-white font-bold mb-1">Biomes O' Plenty</h4>
+                        <p class="text-victini-muted text-xs">Vast array of stunning custom biomes providing unique backdrop landscapes.</p>
+                    </div>
+                    <div class="glass-card p-5 rounded-xl border border-victini-border">
+                        <i class="fa-solid fa-archway text-victini-cyanglow text-2xl mb-2"></i>
+                        <h4 class="text-white font-bold mb-1">When Dungeons Arise</h4>
+                        <p class="text-victini-muted text-xs">Massive dungeons, Seven Seas temples, and rogue structures to explore.</p>
+                    </div>
+                    <div class="glass-card p-5 rounded-xl border border-victini-border">
+                        <i class="fa-solid fa-location-dot text-victini-flame text-2xl mb-2"></i>
+                        <h4 class="text-white font-bold mb-1">Waystones & Compasses</h4>
+                        <p class="text-victini-muted text-xs">Nature's & Explorer's Compasses for streamlined world travel across Nubalia.</p>
+                    </div>
+                    <div class="glass-card p-5 rounded-xl border border-victini-border">
+                        <i class="fa-solid fa-utensils text-victini-crimson text-2xl mb-2"></i>
+                        <h4 class="text-white font-bold mb-1">Farmer's Delight & Chipped</h4>
+                        <p class="text-victini-muted text-xs">Expanded culinary crafting, building blocks, and architectural customization.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION F: BETA STATUS & TRANSPARENCY NOTICE -->
+        <section class="py-16 bg-gradient-to-r from-victini-red/30 via-victini-obsidian to-victini-eyeblue/30 border-y border-victini-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="space-y-2 text-center md:text-left">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-victini-orange/20 border border-victini-orange/40 text-victini-flame font-mono text-xs">
+                            <i class="fa-solid fa-code-branch"></i>
+                            <span>DEVELOPMENT STATUS NOTICE</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">The Beginning of Nubalia</h3>
+                        <p class="text-victini-cream/90 max-w-2xl text-sm leading-relaxed">
+                            This release represents the first playable foundation of the project. Regional progression, Gym challenges, trainer balance, and route features continue to be continuously developed and refined.
+                        </p>
+                    </div>
+                    <button onclick="openDownloadModal()" class="px-6 py-3 rounded-xl flame-btn text-white font-bold text-sm whitespace-nowrap shadow-lg transition-all shrink-0">
+                        Join Stable Beta Test
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION G: UPDATES & CHANGELOG -->
+        <section id="updates" class="py-20 bg-victini-obsidian">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center mb-12">
+                    <div class="inline-flex items-center gap-2 text-victini-flame font-bold text-sm tracking-wider uppercase mb-2">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>Release History</span>
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-white">Development Updates & Changelog</h2>
+                </div>
+
+                <!-- Timeline Container -->
+                <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:-translate-x-1/2 before:w-0.5 before:bg-victini-border">
+                    
+                    <!-- Entry 1 -->
+                    <div class="relative flex flex-col md:flex-row items-center justify-between group">
+                        <div class="w-8 h-8 rounded-full bg-victini-flame border-4 border-victini-obsidian text-victini-obsidian flex items-center justify-center font-black text-xs z-10 my-2 md:my-0">
+                            V
+                        </div>
+                        <div class="w-full md:w-[calc(50%-2rem)] glass-card p-6 rounded-2xl border border-victini-orange/40">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="px-2.5 py-0.5 rounded bg-victini-card text-victini-flame font-mono text-xs font-bold border border-victini-orange/30">Stable Beta v0.8.2</span>
+                                <span class="text-xs text-victini-muted font-mono">Current Release</span>
+                            </div>
+                            <h4 class="text-white font-bold text-lg mb-2">Initial Regional Beta Foundation</h4>
+                            <ul class="text-xs text-victini-cream space-y-1.5 list-disc list-inside">
+                                <li>Established 18-Gym route framework and type alignment.</li>
+                                <li>Configured Cobblemon Trainers for Zone 1 (Lv 15-18) & Zone 2 (Lv 19-23).</li>
+                                <li>Integrated Mega Showdown, Raids & Dens, and Cobblepedia.</li>
+                                <li>Optimized Fabric 1.21.1 world generation and biome integration.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION H: DOWNLOAD & COMMUNITY CTA -->
+        <section class="py-20 bg-gradient-to-b from-victini-obsidian to-victini-card relative border-t border-victini-border">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                
+                <div class="glass-panel p-10 sm:p-16 rounded-3xl border border-victini-border relative overflow-hidden">
+                    <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-victini-orange/10 blur-3xl rounded-full pointer-events-none"></div>
+
+                    <h2 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight mb-4">
+                        Begin Your Journey
+                    </h2>
+                    <p class="text-victini-cream text-base sm:text-lg max-w-2xl mx-auto mb-8">
+                        Ready to explore Nubalia? Download the stable beta, build your team, and help shape the future of the region.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+                        <button onclick="openDownloadModal()" class="w-full sm:w-auto px-8 py-4 rounded-xl flame-btn text-white font-black text-lg transition-all flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-download"></i>
+                            <span>Download the Beta</span>
+                        </button>
+                        <a href="#updates" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card text-victini-cream font-semibold text-lg hover:text-white transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-list-check text-victini-flame"></i>
+                            <span>View Changelog</span>
+                        </a>
+                    </div>
+
+                    <!-- Modpack Specs Bar -->
+                    <div class="pt-8 border-t border-victini-border flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-victini-muted">
+                        <span><strong class="text-white">Minecraft:</strong> 1.21.1</span>
+                        <span>•</span>
+                        <span><strong class="text-white">Loader:</strong> Fabric</span>
+                        <span>•</span>
+                        <span><strong class="text-white">Cobblemon:</strong> 1.8.2</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-victini-obsidian py-12 border-t border-victini-border text-xs text-victini-muted">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-fire text-victini-flame text-xl"></i>
+                    <span class="font-bold text-white text-sm">Cobblemon Nubalia Region</span>
+                </div>
+                <div class="flex items-center gap-6 text-victini-muted">
+                    <a href="#" onclick="openDownloadModal(); return false;" class="hover:text-victini-flame transition-colors">Modrinth Page</a>
+                    <a href="#" onclick="alert('Discord community link placeholder'); return false;" class="hover:text-victini-flame transition-colors">Discord Server</a>
+                    <a href="#" onclick="alert('Bug report form placeholder'); return false;" class="hover:text-victini-flame transition-colors">Report Bug</a>
+                </div>
+            </div>
+
+            <!-- Legal Disclaimer -->
+            <div class="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-victini-muted text-left leading-relaxed">
+                <strong class="text-victini-cream block mb-1">Disclaimer & Legal Notice:</strong>
+                Cobblemon Nubalia is an independent, fan-made Minecraft modpack project built using third-party mods including Cobblemon and Fabric. This project is not affiliated with, endorsed by, or associated with Nintendo, Game Freak, or The Pokémon Company. All Pokémon trademarks and copyright assets belong to their respective owners.
+            </div>
+
+            <div class="text-center text-victini-muted pt-2">
+                © <span id="currentYear"></span> Cobblemon Nubalia Team. Inspired by Victini victory flame energy.
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ROUTE INSPECT MODAL -->
+    <div id="routeModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-2xl rounded-2xl border border-victini-orange/40 p-6 sm:p-8 relative overflow-hidden shadow-2xl">
+            <button onclick="closeRouteModal()" class="absolute top-4 right-4 text-victini-muted hover:text-white p-2 rounded-lg hover:bg-white/10">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div id="modalHeader" class="flex items-center gap-3 mb-4">
+                <!-- Dynamic Header -->
+            </div>
+
+            <h3 id="modalTitle" class="text-2xl sm:text-3xl font-black text-white mb-2"></h3>
+            <p id="modalEnv" class="text-victini-cream text-sm mb-6 leading-relaxed"></p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                <div class="p-4 rounded-xl bg-victini-obsidian/80 border border-victini-border">
+                    <span class="text-xs font-mono text-victini-muted uppercase block mb-1">Type Affinity</span>
+                    <span id="modalType" class="text-sm font-bold text-white flex items-center gap-2"></span>
+                </div>
+                <div class="p-4 rounded-xl bg-victini-obsidian/80 border border-victini-border">
+                    <span class="text-xs font-mono text-victini-muted uppercase block mb-1">Recommended Bracket</span>
+                    <span id="modalLevel" class="text-sm font-bold text-victini-flame flex items-center gap-2">
+                        <i class="fa-solid fa-shield"></i> Level Bracket TBD
+                    </span>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-victini-orange/15 border border-victini-orange/30 text-xs text-victini-cream mb-6">
+                <i class="fa-solid fa-circle-info mr-1 text-victini-flame"></i> <strong>Gym Status:</strong> Planned regional Gym challenge. Roster, leader preview, and battle stadium blueprints will unlock in upcoming updates.
+            </div>
+
+            <div class="flex justify-end">
+                <button onclick="closeRouteModal()" class="px-5 py-2.5 rounded-xl flame-btn text-white font-bold text-sm">
+                    Close Details
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOWNLOAD MODAL -->
+    <div id="downloadModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-md rounded-2xl border border-victini-orange/40 p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="closeDownloadModal()" class="absolute top-4 right-4 text-victini-muted hover:text-white p-2 rounded-lg hover:bg-white/10">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-victini-red to-victini-orange border border-victini-gold/40 flex items-center justify-center mx-auto text-white text-2xl mb-3 shadow-lg">
+                    <i class="fa-solid fa-download"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white">Download Cobblemon Nubalia</h3>
+                <p class="text-xs text-victini-muted mt-1">Minecraft 1.21.1 · Fabric Loader · Cobblemon 1.8.2</p>
+            </div>
+
+            <div class="space-y-3 mb-6">
+                <a href="https://modrinth.com" target="_blank" rel="noopener" class="w-full py-3 px-4 rounded-xl flame-btn text-white font-bold text-sm flex items-center justify-between transition-all">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-cubes"></i> Modrinth Page</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+                <button onclick="alert('Configurable launcher profile link placeholder.');" class="w-full py-3 px-4 rounded-xl glass-card text-victini-cream hover:text-white font-semibold text-sm flex items-center justify-between border border-victini-border">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-file-zipper text-victini-cyanglow"></i> Zip Modpack Archive</span>
+                    <span class="text-xs text-victini-muted">Beta v0.8.2</span>
+                </button>
+            </div>
+
+            <p class="text-xs text-victini-muted text-center leading-relaxed">
+                Make sure you have Fabric 1.21.1 installed before launching the modpack.
+            </p>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const routesData = [
+            { id: 1, name: "Oakwood Trail", type: "Bug", level: "Lv 15–18", cat: "physical", color: "#A8B820", bg: "from-lime-950/60 to-victini-obsidian", desc: "Lush woodland and winding forest paths teeming with early insect encounters." },
+            { id: 2, name: "Dawnfield Plains", type: "Normal", level: "Lv 19–23", cat: "physical", color: "#A8A878", bg: "from-amber-950/60 to-victini-obsidian", desc: "Open grasslands illuminated by morning sunlight and versatile trainers." },
+            { id: 3, name: "Granite Pass", type: "Rock", level: "Lv 24–27", cat: "physical", color: "#B8A038", bg: "from-stone-900/70 to-victini-obsidian", desc: "Rocky cliffs, steep mountain trails, and ancient stone formations." },
+            { id: 4, name: "Tidal Coast", type: "Water", level: "Lv 28–31", cat: "elemental", color: "#6890F0", bg: "from-blue-950/70 to-victini-obsidian", desc: "Sandy beaches, ocean views, and bustling coastal settlements." },
+            { id: 5, name: "Mistveil Swamp", type: "Poison", level: "Lv 32–35", cat: "mystic", color: "#A040A0", bg: "from-purple-950/70 to-victini-obsidian", desc: "Misty wetlands, dense fog, and mysterious toxic vegetation." },
+            { id: 6, name: "Ancient Sun Dunes", type: "Ground", level: "Lv 36–39", cat: "physical", color: "#E0C068", bg: "from-amber-900/60 to-victini-obsidian", desc: "Golden dunes, shifting sands, and buried ancient desert ruins." },
+            { id: 7, name: "Lunaria Gardens", type: "Fairy", level: "Lv 40–43", cat: "mystic", color: "#EE99AC", bg: "from-pink-950/70 to-victini-obsidian", desc: "Luminous flowers, enchanted glades, and elegant gardens." },
+            { id: 8, name: "Galecrest Peaks", type: "Flying", level: "Lv 44–47", cat: "elemental", color: "#A890F0", bg: "from-indigo-950/70 to-victini-obsidian", desc: "High mountain passes, cloud-covered cliffs, and powerful winds." },
+            { id: 9, name: "Path of the Fist", type: "Fighting", level: "Lv 48–51", cat: "physical", color: "#C03028", bg: "from-red-950/70 to-victini-obsidian", desc: "Rugged training grounds, martial dojos, and austere architecture." },
+            { id: 10, name: "Frostfall Pass", type: "Ice", level: "Lv 52–54", cat: "elemental", color: "#98D8D8", bg: "from-sky-950/70 to-victini-obsidian", desc: "Icy peaks, frozen glacial paths, and biting blizzard winds." },
+            { id: 11, name: "Voltia Corridor", type: "Electric", level: "Lv 55–57", cat: "elemental", color: "#F8D030", bg: "from-yellow-950/70 to-victini-obsidian", desc: "Energetic landscapes, storm conduits, and industrial details." },
+            { id: 12, name: "Domain of Dusk", type: "Ghost", level: "Lv 58–60", cat: "mystic", color: "#705898", bg: "from-violet-950/70 to-victini-obsidian", desc: "Shadowy architecture, haunting mausoleums, and atmospheric ruins." },
+            { id: 13, name: "Crimson Caldera", type: "Fire", level: "Lv 61–63", cat: "elemental", color: "#FF4500", bg: "from-orange-950/80 to-victini-obsidian", desc: "Volcanic terrain, glowing lava lakes, and extreme heat." },
+            { id: 14, name: "Ironhold Bastion", type: "Steel", level: "Lv 64–66", cat: "physical", color: "#B8B8D0", bg: "from-zinc-900/80 to-victini-obsidian", desc: "Metallic architecture, fortified walls, and heavy armory gates." },
+            { id: 15, name: "Shadow District", type: "Dark", level: "Lv 67–69", cat: "mystic", color: "#705848", bg: "from-stone-950/90 to-victini-obsidian", desc: "Dark urban streets, alleys, and mysterious regional landmarks." },
+            { id: 16, name: "Celestial Observatory", type: "Psychic", level: "Lv 70–72", cat: "mystic", color: "#F85888", bg: "from-fuchsia-950/70 to-victini-obsidian", desc: "High observatories, starry sky vistas, and cosmic motifs." },
+            { id: 17, name: "Dragonspire Peaks", type: "Dragon", level: "Lv 73–75", cat: "mystic", color: "#7038F8", bg: "from-violet-950/80 to-victini-obsidian", desc: "Dramatic summits and ancient dragon-themed sanctuary architecture." },
+            { id: 18, name: "Champions' Path", type: "Grass", level: "Lv 76–80", cat: "elemental", color: "#78C850", bg: "from-emerald-950/70 to-victini-obsidian", desc: "Lush, challenging landscapes evoking the culmination of the journey." }
+        ];
+
+        let activeFilter = 'all';
+
+        function renderRoutes() {
+            const grid = document.getElementById('routesGrid');
+            const searchVal = document.getElementById('routeSearch').value.toLowerCase();
+            grid.innerHTML = '';
+
+            let count = 0;
+
+            routesData.forEach(route => {
+                const matchesSearch = route.name.toLowerCase().includes(searchVal) || 
+                                      route.type.toLowerCase().includes(searchVal) ||
+                                      `route ${route.id}`.includes(searchVal);
+                
+                const matchesCategory = activeFilter === 'all' || route.cat === activeFilter;
+
+                if (matchesSearch && matchesCategory) {
+                    count++;
+                    const card = document.createElement('div');
+                    card.className = `glass-card p-6 rounded-2xl border border-victini-border relative flex flex-col justify-between group bg-gradient-to-br ${route.bg} cursor-pointer`;
+                    card.onclick = () => openRouteModal(route.id);
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="font-mono text-xs font-bold text-victini-muted">ROUTE ${route.id < 10 ? '0' + route.id : route.id}</span>
+                                <span class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-white shadow" style="background-color: ${route.color}">
+                                    ${route.type}
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white group-hover:text-victini-flame transition-colors mb-2">${route.name}</h3>
+                            <p class="text-victini-cream/90 text-xs leading-relaxed mb-4">${route.desc}</p>
+                        </div>
+                        <div class="pt-4 border-t border-victini-border flex items-center justify-between text-xs">
+                            <span class="text-victini-muted font-mono"><i class="fa-solid fa-shield text-victini-flame mr-1"></i>${route.level}</span>
+                            <span class="text-victini-cyanglow font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                Inspect <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+
+            document.getElementById('noResults').classList.toggle('hidden', count > 0);
+        }
+
+        function setFilter(cat) {
+            activeFilter = cat;
+            document.querySelectorAll('.type-filter-btn').forEach(btn => {
+                if (btn.dataset.filter === cat) {
+                    btn.className = "type-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold flame-btn text-white border border-victini-gold/30 transition-all";
+                } else {
+                    btn.className = "type-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/5 text-victini-muted border border-white/10 hover:bg-white/10 transition-all";
+                }
+            });
+            renderRoutes();
+        }
+
+        function filterRoutes() {
+            renderRoutes();
+        }
+
+        function resetFilters() {
+            document.getElementById('routeSearch').value = '';
+            setFilter('all');
+        }
+
+        function openRouteModal(id) {
+            const route = routesData.find(r => r.id === id);
+            if (!route) return;
+
+            document.getElementById('modalHeader').innerHTML = `
+                <span class="font-mono text-xs font-bold px-2 py-1 bg-white/10 rounded text-victini-muted">ROUTE ${route.id < 10 ? '0' + route.id : route.id}</span>
+                <span class="px-3 py-1 rounded-full text-xs font-bold text-white uppercase" style="background-color: ${route.color}">${route.type} GYM</span>
+            `;
+            document.getElementById('modalTitle').innerText = route.name;
+            document.getElementById('modalEnv').innerText = route.desc;
+            document.getElementById('modalType').innerHTML = `<span class="w-3 h-3 rounded-full inline-block" style="background-color:${route.color}"></span> ${route.type} Type Gym Challenge`;
+            document.getElementById('modalLevel').innerHTML = `<i class="fa-solid fa-shield text-victini-flame"></i> Recommended: ${route.level}`;
+
+            const modal = document.getElementById('routeModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeRouteModal() {
+            const modal = document.getElementById('routeModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function openDownloadModal() {
+            const modal = document.getElementById('downloadModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDownloadModal() {
+            const modal = document.getElementById('downloadModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-4 py-2 rounded-lg text-sm font-semibold text-victini-muted hover:text-white transition-all";
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            document.getElementById(`tab-${tabId}`).className = "tab-btn px-4 py-2 rounded-lg text-sm font-bold flame-btn text-white transition-all";
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.className = 'fa-solid fa-bars text-xl';
+            } else {
+                icon.className = 'fa-solid fa-xmark text-xl';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRoutes();
+            document.getElementById('currentYear').innerText = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
